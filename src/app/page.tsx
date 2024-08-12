@@ -1,15 +1,23 @@
-'use client';
+import { cookies } from 'next/headers';
+import { TaskList } from './components/taskList';
+import { getTasksByUser } from './server/taskActions';
 
-import styled from 'styled-components';
+export default async function Index() {
+  const userId = cookies().get('userId');
 
-const StyledPage = styled.div`
-  .page {
-  }
-`;
+  const { success: tasks, error } = await getTasksByUser();
 
-export default function Index() {
   return (
-    <StyledPage>
-    </StyledPage>
+    <main
+      style={{
+        display: 'flex',
+        minHeight: '100svh',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '1rem 0',
+      }}
+    >
+      <TaskList userId={userId?.value} tasks={tasks} error={error} />
+    </main>
   );
 }

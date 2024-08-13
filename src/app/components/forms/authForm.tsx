@@ -1,3 +1,5 @@
+'use client';
+
 import styled from 'styled-components';
 import { LabelledInput } from '../ui/labelledInput';
 
@@ -20,7 +22,7 @@ export const AuthFormContent = ({ buttonText }: Props) => {
   return (
     <>
       <LabelledInput label="Username" htmlFor="name" id="name" name="name" />
-      <LabelledInput label="Password" htmlFor="password" id="password" name="password" />
+      <LabelledInput label="Password" htmlFor="password" id="password" name="password" type="password" />
       <StyledSubmitButton>{buttonText}</StyledSubmitButton>
     </>
   );

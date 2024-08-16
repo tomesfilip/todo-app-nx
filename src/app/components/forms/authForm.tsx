@@ -6,13 +6,12 @@ import { LabelledInput } from '../ui/labelledInput';
 type Props = { buttonText: string };
 
 const StyledSubmitButton = styled.button`
-  background-color: #374151;
+  background-color: ${(props) => props.theme.colors.bg};
   border-radius: 0.5rem;
-  color: white;
+  color: ${(props) => props.theme.colors.text};
   padding: 0.5rem 1rem;
 
   &:disabled {
-    background-color: #374151;
     opacity: 0.5;
     cursor: not-allowed;
   }

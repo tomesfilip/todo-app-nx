@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Overlay = styled.div<{ $isOpen: boolean }>`
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+  background: ${({ theme }) => theme.colors.primary};
   position: fixed;
   top: 0;
   left: 0;
@@ -45,8 +46,8 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #047857;
-  color: white;
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.bg};
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;

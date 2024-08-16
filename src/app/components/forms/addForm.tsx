@@ -14,13 +14,12 @@ const StyledForm = styled.form`
 `;
 
 const StyledSubmitButton = styled.button`
-  background-color: #047857;
+  background-color: ${(props) => props.theme.colors.primary};
   border-radius: 0.5rem;
-  color: white;
+  color: ${(props) => props.theme.colors.bg};
   padding: 0.5rem 1rem;
 
   &:disabled {
-    background-color: #047857;
     opacity: 0.5;
     cursor: not-allowed;
   }

@@ -1,3 +1,12 @@
+:root {
+  --color-bg: #f5f5f5;
+  --color-text: #131b23;
+  --color-primary: #fb4d3d;
+
+  --size-desktop: 1280px;
+  --size-mobile: 640px;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
@@ -6,6 +15,12 @@ body {
   font-family: inherit;
   line-height: inherit;
   margin: 0;
+  min-height: 100svh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 h1,
 h2,

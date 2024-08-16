@@ -1,6 +1,6 @@
 import { Toaster } from 'sonner';
-import './global.css';
-import { StyledComponentsRegistry } from './registry';
+import Providers from './Providers';
+import './styles/global.css';
 
 export const metadata = {
   title: 'TODO app',
@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Toaster />
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

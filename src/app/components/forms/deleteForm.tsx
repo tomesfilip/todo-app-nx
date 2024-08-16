@@ -4,8 +4,8 @@ import { deleteTask } from 'src/app/server/taskActions';
 import styled from 'styled-components';
 
 const StyledDeleteButton = styled.button`
-  background-color: red;
-  color: white;
+  background-color: ${(props) => props.theme.colors.bg};
+  color: ${(props) => props.theme.colors.text};
   padding: 0.5rem;
   border-radius: 12px;
   display: flex;

@@ -13,7 +13,7 @@ import { TaskItem } from './taskItem';
 const StyledTaskListWrapper = styled.div`
   width: 100%;
   max-width: 1024px;
-  background-color: grey;
+  background-color: ${(props) => props.theme.colors.bg};
   border-radius: 12px;
   padding: 2rem;
   position: relative;
@@ -21,13 +21,20 @@ const StyledTaskListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+
+  -webkit-box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.75);
 `;
 
 const StyledAuthLink = styled(Link)`
+  background-color: ${(props) => props.theme.colors.primary};
+  border-radius: 0.5rem;
+  color: ${(props) => props.theme.colors.bg};
   font-size: 18px;
-  background-color: gray;
-  padding: 1rem 0.2rem;
+  padding: 0.75rem 1.4rem;
   border-radius: 12px;
+  text-decoration: none;
 `;
 
 const StyledAddTaskButton = styled.button`

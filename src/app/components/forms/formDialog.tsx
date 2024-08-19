@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
 
 const Overlay = styled.div<{ $isOpen: boolean }>`
@@ -22,10 +23,25 @@ const DialogContent = styled.div`
   width: 100%;
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
 `;
 
 const DialogHeader = styled.div`
   margin-bottom: 1rem;
+`;
+
+const DialogCloseButton = styled.button`
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  padding: 0;
+  outline: none;
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  cursor: pointer;
 `;
 
 const DialogTitle = styled.h2`
@@ -60,33 +76,26 @@ const Button = styled.button`
   }
 `;
 
-const CancelButton = styled(Button)`
-  background-color: #f9fafb;
-  color: #4b5563;
-`;
-
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   title: string;
   description?: string;
-  cancelButtonText?: string;
   children: ReactNode;
 };
 
-export const FormDialog = ({ isOpen, setIsOpen, title, description, children, cancelButtonText = 'Cancel' }: Props) => {
+export const FormDialog = ({ isOpen, setIsOpen, title, description, children }: Props) => {
   return (
     <Overlay $isOpen={isOpen}>
       <DialogContent>
+        <DialogCloseButton onClick={() => setIsOpen(false)} aria-label="Close modal">
+          <IoClose size={24} />
+        </DialogCloseButton>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
         {children}
-        <ButtonContainer>
-          <CancelButton onClick={() => setIsOpen(false)}>{cancelButtonText}</CancelButton>
-          <Button onClick={() => setIsOpen(false)}>Submit</Button>
-        </ButtonContainer>
       </DialogContent>
     </Overlay>
   );

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { IoAdd } from 'react-icons/io5';
-
 import Link from 'next/link';
+import { useState } from 'react';
+import { FiLogIn } from 'react-icons/fi';
+import { IoAdd } from 'react-icons/io5';
 import styled from 'styled-components';
+
 import { TaskType } from '../lib/appTypes';
 import { AddForm } from './forms/addForm';
 import { FormDialog } from './forms/formDialog';
@@ -35,6 +36,9 @@ const StyledAuthLink = styled(Link)`
   padding: 0.75rem 1.4rem;
   border-radius: 12px;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const StyledAddTaskButton = styled.button`
@@ -44,11 +48,13 @@ const StyledAddTaskButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--grey-primary);
+  background-color: ${(props) => props.theme.colors.bg};
   position: absolute;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   bottom: -4rem;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 const StyledTaskList = styled.ul`
@@ -77,7 +83,12 @@ export const TaskList = ({ userId, tasks, error }: Props) => {
   return (
     <StyledTaskListWrapper>
       {error && <StyledErrorText>{error}</StyledErrorText>}
-      {!userId && <StyledAuthLink href="/login">Authenticate</StyledAuthLink>}
+      {!userId && (
+        <StyledAuthLink href="/login">
+          Log in
+          <FiLogIn />
+        </StyledAuthLink>
+      )}
       {userId && (
         <>
           <StyledAddTaskButton onClick={() => setIsAddFormDialogOpen(true)}>

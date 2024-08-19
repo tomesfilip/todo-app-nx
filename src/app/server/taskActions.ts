@@ -142,6 +142,8 @@ export async function toggleCompleted(formData: FormData) {
       }),
     });
 
+    console.log('compliting');
+
     if (!res.ok) {
       throw new Error('Failed to update a task');
     }

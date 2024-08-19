@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { AuthFormContent } from 'src/app/components/forms/authForm';
+import { AuthFormContent } from 'src/app/components/forms/authFormContent';
 import { login } from '../../server/userActions';
 
 export default function Login() {

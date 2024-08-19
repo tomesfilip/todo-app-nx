@@ -44,9 +44,17 @@ export const AddForm = ({ setIsDialogOpen }: Props) => {
         setIsDialogOpen(false);
       }}
     >
-      <LabelledInput label="Task title" htmlFor="title" id="title" name="title" placeholder="Go to dentist" />
+      <LabelledInput label="Task title" htmlFor="title" id="title" name="title" placeholder="Go to dentist" required />
+      <LabelledInput
+        label="Task description"
+        htmlFor="description"
+        id="description"
+        name="description"
+        placeholder="8th tooth coming out"
+        required
+      />
       <StyledSubmitButton aria-disabled={pending} disabled={pending}>
-        Save changes
+        Add task
       </StyledSubmitButton>
     </StyledForm>
   );

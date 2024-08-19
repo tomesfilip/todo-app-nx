@@ -15,9 +15,9 @@ type TaskItemProps = {
   task: TaskType;
 };
 
-const StyledTaskLink = styled(Link)`
-  height: 2rem;
+const StyledTask = styled.div`
   display: flex;
+  max-height: 40px;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
@@ -29,13 +29,14 @@ const StyledTaskLink = styled(Link)`
   }
 `;
 
-const StyledTaskText = styled.p<{ $isCompleted?: boolean }>`
+const StyledTaskLinkText = styled(Link)<{ $isCompleted: boolean }>`
   width: 100%;
   max-width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-decoration: ${($isCompleted) => ($isCompleted ? 'line-through' : 'none')};
+  text-decoration: ${({ $isCompleted }) => ($isCompleted ? 'line-through' : 'none')};
+  color: ${(props) => props.theme.colors.text};
 `;
 
 const StyledControlsWrapper = styled.div`
@@ -47,6 +48,7 @@ const StyledControlButton = styled.button<{ $type: 'info' | 'danger' }>`
   padding: 0.5rem;
   border-radius: 9999px;
   background-color: ${({ $type }) => ($type === 'info' ? '#2563eb' : $type === 'danger' ? '#dc2626' : 'initial')};
+  cursor: pointer;
 `;
 
 export const TaskItem = ({ task }: TaskItemProps) => {
@@ -57,18 +59,20 @@ export const TaskItem = ({ task }: TaskItemProps) => {
 
   return (
     <>
-      <StyledTaskLink href={`/tasks/${id}`}>
+      <StyledTask>
         <ToggleCompletedForm id={id} userId={userId} isCompleted={isCompleted} />
-        <StyledTaskText $isCompleted={isCompleted}>{title}</StyledTaskText>
+        <StyledTaskLinkText href={`/tasks/${id}`} $isCompleted={isCompleted}>
+          {title}
+        </StyledTaskLinkText>
         <StyledControlsWrapper>
           <StyledControlButton onClick={() => setIsEditDialogOpen(true)} $type="info">
-            <MdEdit color="white" />
+            <MdEdit color="white" size={16} />
           </StyledControlButton>
           <StyledControlButton onClick={() => setIsDeleteDialogOpen(true)} $type="danger">
-            <FaTrash color="white" />
+            <FaTrash color="white" size={16} />
           </StyledControlButton>
         </StyledControlsWrapper>
-      </StyledTaskLink>
+      </StyledTask>
       <FormDialog
         title="Edit task"
         description="Make changes to your task here. Click save when you are done."

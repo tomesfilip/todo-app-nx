@@ -7,10 +7,12 @@ import styled from 'styled-components';
 
 const StyledCheckmarkButton = styled.button<{ $isCompleted?: boolean }>`
   border-radius: 100%;
-  border: 1px solid red;
+  border: 1px solid ${(props) => props.theme.colors.primary};
   width: 20px;
   height: 20px;
-  background-color: ${($isCompleted) => ($isCompleted ? 'red' : 'transparent')};
+  background-color: ${(props) => (props.$isCompleted ? props.theme.colors.primary : 'transparent')};
+  z-index: 2;
+  cursor: pointer;
   :disabled {
     opacity: 0.5;
   }
@@ -18,6 +20,7 @@ const StyledCheckmarkButton = styled.button<{ $isCompleted?: boolean }>`
 
 export const ToggleCompletedForm = ({ id, userId, isCompleted }: Pick<TaskType, 'id' | 'userId' | 'isCompleted'>) => {
   const { pending } = useFormStatus();
+  console.log(`ID: ${id}, userId: ${userId}, isCompleted: ${isCompleted}`);
 
   return (
     <form action={toggleCompleted} className="flex items-center">

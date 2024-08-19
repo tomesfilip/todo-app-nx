@@ -23,6 +23,7 @@ const StyledSubmitButton = styled.button`
   border-radius: 0.5rem;
   color: ${(props) => props.theme.colors.bg};
   padding: 0.5rem 1rem;
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.5;

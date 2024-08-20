@@ -3,18 +3,13 @@
 import bcrypt from 'bcrypt';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { z } from 'zod';
 
-import { UserType } from '../lib/appTypes';
-import { API_URL } from '../lib/constants';
+import { UserType } from '@/lib/appTypes';
+import { API_URL } from '@/lib/constants';
+import { userSchema } from '@/lib/schemas';
 
 export async function register(formData: FormData) {
-  const schema = z.object({
-    name: z.string().min(5),
-    password: z.string().min(5),
-  });
-
-  const data = schema.parse({
+  const data = userSchema.parse({
     name: formData.get('name'),
     password: formData.get('password'),
   });
@@ -39,12 +34,7 @@ export async function register(formData: FormData) {
 }
 
 export async function login(formData: FormData) {
-  const schema = z.object({
-    name: z.string().min(5),
-    password: z.string().min(5),
-  });
-
-  const data = schema.parse({
+  const data = userSchema.parse({
     name: formData.get('name'),
     password: formData.get('password'),
   });

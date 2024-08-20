@@ -4,10 +4,3 @@ if (!API_KEY) {
 }
 
 export const API_URL = `https://${API_KEY}.mockapi.io/api/`;
-
-export const REDIRECTS = {
-  toLogin: '/login',
-  toRegister: '/register',
-  afterLogin: '/',
-  afterLogout: '/login',
-} as const;

@@ -14,14 +14,14 @@ const StyledInput = styled.input`
 
 type Props = {
   label: string;
-} & LabelHTMLAttributes<HTMLLabelElement> &
-  InputHTMLAttributes<HTMLInputElement>;
+  id: string;
+} & InputHTMLAttributes<HTMLInputElement>;
 
-export const LabelledInput = ({ label, ...props }: Props) => {
+export const LabelledInput = ({ label, id, ...props }: Props) => {
   return (
     <StyledLabelledInputWrapper>
-      <label htmlFor={props.htmlFor}>{label}</label>
-      <StyledInput type="text" {...props} />
+      <label htmlFor={id}>{label}</label>
+      <StyledInput type="text" id={id} name={id} {...props} />
     </StyledLabelledInputWrapper>
   );
 };

@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { TaskType } from 'src/app/lib/appTypes';
 import { editTask } from 'src/app/server/taskActions';
 import styled from 'styled-components';
+import { LabelledInput } from '../ui/labelledInput';
 
 const StyledLabelInputWrapper = styled.div`
   display: grid;
@@ -31,12 +32,6 @@ const StyledSubmitButton = styled.button`
   }
 `;
 
-const StyledTitleInput = styled.input`
-  padding: 0.25rem 0.5rem;
-  border: 1px solid #6b7280;
-  border-radius: 0.5rem;
-`;
-
 type Props = {
   task: TaskType;
   setIsDialogOpen: (value: boolean) => void;
@@ -46,10 +41,12 @@ export const EditForm = ({ task, setIsDialogOpen }: Props) => {
   const ref = useRef<HTMLFormElement>(null);
 
   const [newTitle, setNewTitle] = useState(task.title);
+  const [newDesc, setNewDesc] = useState(task.description);
 
   const { pending } = useFormStatus();
 
-  const isDisabled = task.title === newTitle || newTitle.length < 1 || pending;
+  const isDisabled =
+    (task.title === newTitle && task.description === newDesc) || newTitle.length < 1 || newDesc.length < 1 || pending;
 
   return (
     <StyledForm
@@ -64,13 +61,21 @@ export const EditForm = ({ task, setIsDialogOpen }: Props) => {
       <StyledLabelInputWrapper>
         <input type="hidden" name="taskId" value={task.id} />
         <input type="hidden" name="userId" value={task.userId} />
-        <label htmlFor="title">Task</label>
-        <StyledTitleInput
-          type="title"
+        <LabelledInput
+          label="Task title"
           id="title"
-          name="title"
+          placeholder="Go to dentist"
+          required
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
+        />
+        <LabelledInput
+          label="Task description"
+          id="description"
+          placeholder="8th tooth coming out"
+          required
+          value={newDesc}
+          onChange={(e) => setNewDesc(e.target.value)}
         />
       </StyledLabelInputWrapper>
       <StyledSubmitButton aria-disabled={isDisabled} disabled={isDisabled}>

@@ -13,6 +13,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/app/*"]
+    },
     "jsx": "preserve",
     "allowJs": true,
     "esModuleInterop": true,
@@ -39,12 +42,5 @@
     "dist/todo-app-nx/.next/types/**/*.ts",
     "next-env.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "tmp",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
-    "dist/todo-app-nx/**/*"
-  ]
+  "exclude": ["node_modules", "tmp", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts", "dist/todo-app-nx/**/*"]
 }

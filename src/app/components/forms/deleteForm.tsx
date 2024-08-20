@@ -1,7 +1,8 @@
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { TaskType } from 'src/app/lib/appTypes';
-import { deleteTask } from 'src/app/server/taskActions';
 import styled from 'styled-components';
+
+import { deleteTask } from '@/server/taskActions';
 
 const StyledDeleteButton = styled.button`
   background-color: ${(props) => props.theme.colors.bg};
@@ -15,12 +16,22 @@ const StyledDeleteButton = styled.button`
   width: 100%;
 `;
 
-export const DeleteForm = ({ id, userId }: Pick<TaskType, 'id' | 'userId'>) => {
+type Props = {
+  id: string;
+  userId: string;
+  shouldRedirectHome?: boolean;
+};
+
+export const DeleteForm = ({ id, userId, shouldRedirectHome }: Props) => {
+  const router = useRouter();
   return (
     <form
       action={async (formData) => {
         await deleteTask(formData);
         toast('Task deleted');
+        if (shouldRedirectHome) {
+          router.push('/');
+        }
       }}
     >
       <input type="hidden" name="taskId" value={id} />

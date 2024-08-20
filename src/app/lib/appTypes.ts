@@ -3,6 +3,7 @@ export type TaskType = {
   userId: string;
   createdAt: string;
   title: string;
+  description: string;
   isCompleted: boolean;
 };
 

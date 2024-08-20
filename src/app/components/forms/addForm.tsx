@@ -3,18 +3,12 @@
 import { useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
-import styled from 'styled-components';
 
 import { addTask } from '@/server/taskActions';
+import { StyledForm } from '../ui/form.styled';
 import { StyledError } from '../ui/formError.styled';
 import { LabelledInput } from '../ui/labelledInput';
 import { StyledSubmitButton } from '../ui/submitButton.styled';
-
-const StyledForm = styled.form`
-  display: grid;
-  align-items: start;
-  gap: 1rem;
-`;
 
 type Props = {
   setIsDialogOpen: (value: boolean) => void;

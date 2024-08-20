@@ -5,11 +5,7 @@ import styled from 'styled-components';
 
 import { TaskType } from '@/lib/appTypes';
 import { toggleCompleted } from '@/server/taskActions';
-
-const StyledForm = styled.form`
-  display: flex;
-  align-items: center;
-`;
+import { StyledForm } from '../ui/form.styled';
 
 const StyledCheckmarkButton = styled.button<{ $isCompleted?: boolean }>`
   border-radius: 100%;

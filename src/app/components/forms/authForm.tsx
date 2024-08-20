@@ -3,17 +3,12 @@
 import { login, register } from '@/server/userActions';
 import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
-import styled from 'styled-components';
 
+import { StyledForm } from '../ui/form.styled';
 import { StyledError } from '../ui/formError.styled';
 import { LabelledInput } from '../ui/labelledInput';
 import { StyledSubmitButton } from '../ui/submitButton.styled';
 import { StyledWrapper } from '../ui/wrapper.styled';
-
-const StyledForm = styled.form`
-  display: grid;
-  gap: 1.2rem;
-`;
 
 type Props = { type: 'login' | 'register' };
 

@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import styled from 'styled-components';
 
 import { deleteTask } from '@/server/taskActions';
 import { StyledSubmitButton } from '../ui/submitButton.styled';

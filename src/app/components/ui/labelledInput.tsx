@@ -10,6 +10,7 @@ const StyledInput = styled.input`
   padding: 0.25rem 0.5rem;
   border: 1px solid #6b7280;
   border-radius: 0.5rem;
+  font-size: 1rem;
 `;
 
 type Props = {

@@ -10,23 +10,34 @@ import { DeleteForm } from './forms/deleteForm';
 import { EditForm } from './forms/editForm';
 import { FormDialog } from './forms/formDialog';
 import { ToggleCompletedForm } from './forms/toggleCompletedForm';
+import { StyledControlButton } from './ui/controlButton.styled';
+import { StyledWrapper } from './ui/wrapper.styled';
 
 type TaskItemProps = {
   task: TaskType;
 };
 
 const StyledTask = styled.div`
+  width: 100%;
   display: flex;
-  max-height: 80px;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  padding: 0 0.5rem;
-  width: 100%;
 
   @media (min-width: 768px) {
     gap: 1rem;
   }
+`;
+
+const StyledTaskHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const StyledTaskContent = styled.div`
+  width: 100%;
 `;
 
 const StyledTaskTitle = styled.h2<{ $isCompleted: boolean }>`
@@ -35,20 +46,20 @@ const StyledTaskTitle = styled.h2<{ $isCompleted: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
   text-decoration: ${({ $isCompleted }) => ($isCompleted ? 'line-through' : 'none')};
   color: ${(props) => props.theme.colors.text};
 `;
 
 const StyledControlsWrapper = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.5rem;
 `;
 
-const StyledControlButton = styled.button<{ $type: 'info' | 'danger' }>`
-  padding: 0.5rem;
-  border-radius: 9999px;
-  background-color: ${({ $type }) => ($type === 'info' ? '#2563eb' : $type === 'danger' ? '#dc2626' : 'initial')};
-  cursor: pointer;
+const StyledLine = styled.hr`
+  border-top: 1px solid ${(props) => props.theme.colors.grey};
+  width: 100%;
 `;
 
 export const TaskDetail = ({ task }: TaskItemProps) => {
@@ -58,19 +69,24 @@ export const TaskDetail = ({ task }: TaskItemProps) => {
   const { id, userId, isCompleted, title, description } = task;
 
   return (
-    <>
+    <StyledWrapper>
       <StyledTask>
-        <ToggleCompletedForm id={id} userId={userId} isCompleted={isCompleted} />
-        <StyledTaskTitle $isCompleted={isCompleted}>{title}</StyledTaskTitle>
-        <p>{description}</p>
-        <StyledControlsWrapper>
-          <StyledControlButton onClick={() => setIsEditDialogOpen(true)} $type="info">
-            <MdEdit color="white" size={16} />
-          </StyledControlButton>
-          <StyledControlButton onClick={() => setIsDeleteDialogOpen(true)} $type="danger">
-            <FaTrash color="white" size={16} />
-          </StyledControlButton>
-        </StyledControlsWrapper>
+        <StyledTaskHeader>
+          <ToggleCompletedForm id={id} userId={userId} isCompleted={isCompleted} />
+          <StyledControlsWrapper>
+            <StyledControlButton onClick={() => setIsEditDialogOpen(true)} $type="info">
+              <MdEdit color="white" size={16} />
+            </StyledControlButton>
+            <StyledControlButton onClick={() => setIsDeleteDialogOpen(true)} $type="danger">
+              <FaTrash color="white" size={16} />
+            </StyledControlButton>
+          </StyledControlsWrapper>
+        </StyledTaskHeader>
+        <StyledLine />
+        <StyledTaskContent>
+          <StyledTaskTitle $isCompleted={isCompleted}>{title}</StyledTaskTitle>
+          <p>{description}</p>
+        </StyledTaskContent>
       </StyledTask>
       <FormDialog
         title="Edit task"
@@ -88,6 +104,6 @@ export const TaskDetail = ({ task }: TaskItemProps) => {
       >
         <DeleteForm userId={userId} id={id} shouldRedirectHome />
       </FormDialog>
-    </>
+    </StyledWrapper>
   );
 };

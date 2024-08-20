@@ -3,18 +3,7 @@ import { toast } from 'sonner';
 import styled from 'styled-components';
 
 import { deleteTask } from '@/server/taskActions';
-
-const StyledDeleteButton = styled.button`
-  background-color: ${(props) => props.theme.colors.bg};
-  color: ${(props) => props.theme.colors.text};
-  padding: 0.5rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-`;
+import { StyledSubmitButton } from '../ui/submitButton.styled';
 
 type Props = {
   id: string;
@@ -36,9 +25,7 @@ export const DeleteForm = ({ id, userId, shouldRedirectHome }: Props) => {
     >
       <input type="hidden" name="taskId" value={id} />
       <input type="hidden" name="userId" value={userId} />
-      <StyledDeleteButton>
-        <span>Delete</span>
-      </StyledDeleteButton>
+      <StyledSubmitButton>Delete</StyledSubmitButton>
     </form>
   );
 };

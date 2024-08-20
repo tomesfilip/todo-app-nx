@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { TaskType } from '@/lib/appTypes';
 import { editTask } from '@/server/taskActions';
 import { LabelledInput } from '../ui/labelledInput';
+import { StyledSubmitButton } from '../ui/submitButton.styled';
 
 const StyledLabelInputWrapper = styled.div`
   display: grid;
@@ -18,19 +19,6 @@ const StyledForm = styled.form`
   display: grid;
   align-items: start;
   gap: 1rem;
-`;
-
-const StyledSubmitButton = styled.button`
-  background-color: ${(props) => props.theme.colors.primary};
-  border-radius: 0.5rem;
-  color: ${(props) => props.theme.colors.bg};
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 `;
 
 type Props = {

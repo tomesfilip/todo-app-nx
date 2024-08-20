@@ -6,6 +6,11 @@ import styled from 'styled-components';
 import { TaskType } from '@/lib/appTypes';
 import { toggleCompleted } from '@/server/taskActions';
 
+const StyledForm = styled.form`
+  display: flex;
+  align-items: center;
+`;
+
 const StyledCheckmarkButton = styled.button<{ $isCompleted?: boolean }>`
   border-radius: 100%;
   border: 1px solid ${(props) => props.theme.colors.primary};
@@ -23,11 +28,11 @@ export const ToggleCompletedForm = ({ id, userId, isCompleted }: Pick<TaskType, 
   const { pending } = useFormStatus();
 
   return (
-    <form action={toggleCompleted} className="flex items-center">
+    <StyledForm action={toggleCompleted}>
       <input type="hidden" name="taskId" value={id} />
       <input type="hidden" name="userId" value={userId} />
       <input type="hidden" name="isCompleted" value={isCompleted ? 'checked' : 'unchecked'} />
       <StyledCheckmarkButton aria-disabled={pending} disabled={pending} $isCompleted={isCompleted} />
-    </form>
+    </StyledForm>
   );
 };

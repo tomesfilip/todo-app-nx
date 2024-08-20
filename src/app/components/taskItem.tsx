@@ -11,6 +11,7 @@ import { DeleteForm } from './forms/deleteForm';
 import { EditForm } from './forms/editForm';
 import { FormDialog } from './forms/formDialog';
 import { ToggleCompletedForm } from './forms/toggleCompletedForm';
+import { StyledControlButton } from './ui/controlButton.styled';
 
 type TaskItemProps = {
   task: TaskType;
@@ -43,13 +44,6 @@ const StyledTaskLinkText = styled(Link)<{ $isCompleted: boolean }>`
 const StyledControlsWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
-`;
-
-const StyledControlButton = styled.button<{ $type: 'info' | 'danger' }>`
-  padding: 0.5rem;
-  border-radius: 9999px;
-  background-color: ${({ $type }) => ($type === 'info' ? '#2563eb' : $type === 'danger' ? '#dc2626' : 'initial')};
-  cursor: pointer;
 `;
 
 export const TaskItem = ({ task }: TaskItemProps) => {

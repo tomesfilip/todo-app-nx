@@ -51,29 +51,8 @@ const DialogTitle = styled.h2`
 
 const DialogDescription = styled.p`
   font-size: 1rem;
-  color: #6b7280;
+  color: ${(props) => props.theme.colors.grey};
   margin-top: 0.5rem;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-`;
-
-const Button = styled.button`
-  background-color: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.bg};
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  &:disabled {
-    background-color: #047857;
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 `;
 
 type Props = {

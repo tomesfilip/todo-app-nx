@@ -6,27 +6,12 @@ import { FiLogIn } from 'react-icons/fi';
 import { IoAdd } from 'react-icons/io5';
 import styled from 'styled-components';
 
+import theme from '@/styles/theme';
 import { TaskType } from '../lib/appTypes';
 import { AddForm } from './forms/addForm';
 import { FormDialog } from './forms/formDialog';
 import { TaskItem } from './taskItem';
-
-const StyledTaskListWrapper = styled.div`
-  width: 100%;
-  max-width: 1024px;
-  background-color: ${(props) => props.theme.colors.bg};
-  border-radius: 12px;
-  padding: 2rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-
-  -webkit-box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.75);
-`;
+import { StyledWrapper } from './ui/wrapper.styled';
 
 const StyledAuthLink = styled(Link)`
   background-color: ${(props) => props.theme.colors.primary};
@@ -81,7 +66,7 @@ export const TaskList = ({ userId, tasks, error }: Props) => {
   const [isAddFormDialogOpen, setIsAddFormDialogOpen] = useState(false);
 
   return (
-    <StyledTaskListWrapper>
+    <StyledWrapper>
       {error && <StyledErrorText>{error}</StyledErrorText>}
       {!userId && (
         <StyledAuthLink href="/login">
@@ -92,7 +77,7 @@ export const TaskList = ({ userId, tasks, error }: Props) => {
       {userId && (
         <>
           <StyledAddTaskButton onClick={() => setIsAddFormDialogOpen(true)}>
-            <IoAdd style={{ color: 'red', width: '3rem', height: '3rem' }} />
+            <IoAdd color={theme.colors.primary} size={52} />
           </StyledAddTaskButton>
           <FormDialog
             title="Add task"
@@ -111,6 +96,6 @@ export const TaskList = ({ userId, tasks, error }: Props) => {
           ))}
         </StyledTaskList>
       )}
-    </StyledTaskListWrapper>
+    </StyledWrapper>
   );
 };

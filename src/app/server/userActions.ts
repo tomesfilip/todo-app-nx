@@ -1,61 +1,59 @@
 'use server';
 
 import bcrypt from 'bcrypt';
-import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { UserType } from '@/lib/appTypes';
 import { API_URL } from '@/lib/constants';
 import { userSchema } from '@/lib/schemas';
+import { redirect } from 'next/navigation';
 
-export async function register(formData: FormData) {
-  const data = userSchema.parse({
-    name: formData.get('name'),
-    password: formData.get('password'),
-  });
-
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(data.password, salt);
-
+export async function register(previousState: any, formData: FormData) {
   try {
+    const data = userSchema.parse({
+      name: formData.get('name'),
+      password: formData.get('password'),
+    });
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(data.password, salt);
+
     const res = await fetch(`${API_URL}/users`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ name: data.name, password: hashedPassword }),
     });
     if (!res.ok) {
-      throw new Error('Error while creating user');
+      const errorData = await res.json();
+      return errorData.message || 'Registration failed.';
     }
-    revalidatePath('/');
   } catch (error) {
-    console.error(error);
-    throw new Error('Failed to create a user');
+    return 'Failed to register. Please try again.';
   }
+  redirect('/login');
 }
 
-export async function login(formData: FormData) {
-  const data = userSchema.parse({
-    name: formData.get('name'),
-    password: formData.get('password'),
-  });
-
+export async function login(previousState: any, formData: FormData) {
   try {
-    const res = await fetch(`${API_URL}/users`);
+    const data = userSchema.parse({
+      name: formData.get('name'),
+      password: formData.get('password'),
+    });
 
+    const res = await fetch(`${API_URL}/users`);
     if (!res.ok) {
-      return { error: 'Error while logging in' };
+      return 'Error while logging in.';
     }
 
     const users: UserType[] = await res.json();
-
     const foundUser = users.find(({ name }) => name === data.name);
     if (!foundUser) {
-      return { error: 'Credentials does not match any user' };
+      return 'Credentials do not match any user.';
     }
 
     const isPasswordValid = await bcrypt.compare(data.password, foundUser.password);
     if (!isPasswordValid) {
-      return { error: 'Invalid password' };
+      return 'Invalid password.';
     }
 
     const expires = new Date(Date.now() + 3600 * 1000);
@@ -67,9 +65,8 @@ export async function login(formData: FormData) {
       path: '/',
       httpOnly: true,
     });
-
-    revalidatePath('/');
   } catch (error) {
-    throw new Error('Failed to log in');
+    return 'Failed to log in. Please try again.';
   }
+  redirect('/');
 }

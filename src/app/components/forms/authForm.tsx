@@ -2,10 +2,13 @@
 
 import { login, register } from '@/server/userActions';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useFormState } from 'react-dom';
 import styled from 'styled-components';
+
+import { StyledError } from '../ui/formError.styled';
 import { LabelledInput } from '../ui/labelledInput';
 import { StyledSubmitButton } from '../ui/submitButton.styled';
+import { StyledWrapper } from '../ui/wrapper.styled';
 
 const StyledForm = styled.form`
   display: grid;
@@ -15,8 +18,6 @@ const StyledForm = styled.form`
 type Props = { type: 'login' | 'register' };
 
 export const AuthForm = ({ type }: Props) => {
-  const router = useRouter();
-
   const formConfig = {
     login: {
       buttonText: 'Login',
@@ -34,17 +35,17 @@ export const AuthForm = ({ type }: Props) => {
 
   const { buttonText, linkText, linkHref, action } = formConfig[type];
 
+  const [error, formAction] = useFormState(action, null);
+
   return (
-    <StyledForm
-      action={async (formData) => {
-        await action(formData);
-        router.push(type === 'login' ? '/' : '/login');
-      }}
-    >
-      <LabelledInput label="Username" id="name" name="name" />
-      <LabelledInput label="Password" id="password" name="password" type="password" />
-      <StyledSubmitButton>{buttonText}</StyledSubmitButton>
-      <Link href={linkHref}>{linkText}</Link>
-    </StyledForm>
+    <StyledWrapper>
+      <StyledForm action={formAction}>
+        <LabelledInput label="Username" id="name" name="name" />
+        <LabelledInput label="Password" id="password" name="password" type="password" />
+        <StyledSubmitButton>{buttonText}</StyledSubmitButton>
+        {error && <StyledError>{error}</StyledError>}
+        <Link href={linkHref}>{linkText}</Link>
+      </StyledForm>
+    </StyledWrapper>
   );
 };

@@ -28,6 +28,7 @@ export async function getTasksByUser(): Promise<{
     }
 
     const tasks: TaskType[] = await res.json();
+
     return { success: tasks };
   } catch (err) {
     return { error: 'No tasks were found.' };
@@ -47,6 +48,7 @@ export async function getTaskByUser(taskId: string): Promise<{
     }
 
     const task: TaskType = await res.json();
+
     return { success: task };
   } catch (err) {
     return { error: 'No task were found.' };
@@ -69,11 +71,12 @@ export async function addTask(formData: FormData) {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      throw new Error('Task not found');
+      return { error: 'Failed to create the task.' };
     }
+
     revalidatePath('/');
   } catch (error) {
-    throw new Error('Failed to create a task');
+    return { error: 'Failed to create the task.' };
   }
 }
 
@@ -82,7 +85,7 @@ export async function editTask(formData: FormData) {
 
   const taskId = formData.get('taskId');
   if (!taskId) {
-    throw new Error('Task not found');
+    return { error: 'Task not found.' };
   }
 
   const data = taskSchema.parse({
@@ -98,11 +101,12 @@ export async function editTask(formData: FormData) {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      throw new Error('Task not found');
+      return { error: 'Failed to update the task.' };
     }
+
     revalidatePath('/');
   } catch (error) {
-    throw new Error('Failed to create a task');
+    return { error: 'Failed to update the task.' };
   }
 }
 
@@ -111,7 +115,7 @@ export async function deleteTask(formData: FormData) {
 
   const taskId = formData.get('taskId');
   if (!taskId) {
-    throw new Error('Task not found');
+    return { error: 'Task not found.' };
   }
 
   try {
@@ -119,12 +123,12 @@ export async function deleteTask(formData: FormData) {
       method: 'DELETE',
     });
     if (!res.ok) {
-      throw new Error('Failed to delete a task');
+      return { error: 'Failed to delete the task.' };
     }
 
     revalidatePath('/');
   } catch (error) {
-    throw new Error('Failed to delete a task');
+    return { error: 'Failed to delete the task.' };
   }
 }
 
@@ -133,7 +137,7 @@ export async function toggleCompleted(formData: FormData) {
 
   const taskId = formData.get('taskId');
   if (!taskId) {
-    throw new Error('Task not found');
+    return { error: 'Task not found.' };
   }
 
   const isCompleted = formData.get('isCompleted');
@@ -146,13 +150,12 @@ export async function toggleCompleted(formData: FormData) {
         isCompleted: !(isCompleted === 'checked'),
       }),
     });
-
     if (!res.ok) {
-      throw new Error('Failed to update a task');
+      return { error: 'Failed to update the task.' };
     }
 
     revalidatePath('/');
   } catch (error) {
-    throw new Error('Failed to update a task');
+    return { error: 'Failed to update the task.' };
   }
 }

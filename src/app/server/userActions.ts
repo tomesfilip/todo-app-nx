@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { z } from 'zod';
+
 import { UserType } from '../lib/appTypes';
 import { API_URL } from '../lib/constants';
 

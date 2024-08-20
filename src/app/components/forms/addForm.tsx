@@ -3,8 +3,9 @@
 import { useRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
-import { addTask } from 'src/app/server/taskActions';
 import styled from 'styled-components';
+
+import { addTask } from '@/server/taskActions';
 import { LabelledInput } from '../ui/labelledInput';
 
 const StyledForm = styled.form`

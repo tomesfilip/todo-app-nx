@@ -1,5 +1,6 @@
 import { Toaster } from 'sonner';
 import Providers from './Providers';
+
 import './styles/global.css';
 
 export const metadata = {

@@ -3,9 +3,10 @@
 import { useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
-import { TaskType } from 'src/app/lib/appTypes';
-import { editTask } from 'src/app/server/taskActions';
 import styled from 'styled-components';
+
+import { TaskType } from '@/lib/appTypes';
+import { editTask } from '@/server/taskActions';
 import { LabelledInput } from '../ui/labelledInput';
 
 const StyledLabelInputWrapper = styled.div`

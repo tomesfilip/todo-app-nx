@@ -1,9 +1,10 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { TaskType } from 'src/app/lib/appTypes';
-import { toggleCompleted } from 'src/app/server/taskActions';
 import styled from 'styled-components';
+
+import { TaskType } from '@/lib/appTypes';
+import { toggleCompleted } from '@/server/taskActions';
 
 const StyledCheckmarkButton = styled.button<{ $isCompleted?: boolean }>`
   border-radius: 100%;

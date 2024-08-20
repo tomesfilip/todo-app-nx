@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, LabelHTMLAttributes } from 'react';
+import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const StyledLabelledInputWrapper = styled.div`

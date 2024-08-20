@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import styled from 'styled-components';
+
 import { TaskType } from '../lib/appTypes';
 import { DeleteForm } from './forms/deleteForm';
 import { EditForm } from './forms/editForm';

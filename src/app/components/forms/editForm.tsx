@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import { TaskType } from '@/lib/appTypes';
 import { editTask } from '@/server/taskActions';
+import { StyledError } from '../ui/formError.styled';
 import { LabelledInput } from '../ui/labelledInput';
 import { StyledSubmitButton } from '../ui/submitButton.styled';
 
@@ -27,6 +28,8 @@ type Props = {
 };
 
 export const EditForm = ({ task, setIsDialogOpen }: Props) => {
+  const [error, setError] = useState('');
+
   const ref = useRef<HTMLFormElement>(null);
 
   const [newTitle, setNewTitle] = useState(task.title);
@@ -41,8 +44,12 @@ export const EditForm = ({ task, setIsDialogOpen }: Props) => {
     <StyledForm
       ref={ref}
       action={async (formData) => {
+        const res = await editTask(formData);
+        if (res?.error) {
+          setError(res.error);
+          return;
+        }
         ref.current?.reset();
-        await editTask(formData);
         toast('Task updated successfully');
         setIsDialogOpen(false);
       }}
@@ -70,6 +77,7 @@ export const EditForm = ({ task, setIsDialogOpen }: Props) => {
       <StyledSubmitButton aria-disabled={isDisabled} disabled={isDisabled}>
         Save changes
       </StyledSubmitButton>
+      {error && error.length > 0 && <StyledError>{error}</StyledError>}
     </StyledForm>
   );
 };

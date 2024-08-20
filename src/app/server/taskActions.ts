@@ -6,11 +6,12 @@ import { cookies } from 'next/headers';
 import { TaskType } from '@/lib/appTypes';
 import { API_URL } from '@/lib/constants';
 import { taskSchema } from '@/lib/schemas';
+import { z } from 'zod';
 
 function getUserId() {
   const userId = cookies().get('userId');
   if (!userId) {
-    throw new Error('User not found. Please login');
+    return { error: 'User not found. Please login' };
   }
   return userId.value;
 }
@@ -56,13 +57,13 @@ export async function getTaskByUser(taskId: string): Promise<{
 }
 
 export async function addTask(formData: FormData) {
-  const data = taskSchema.parse({
-    title: formData.get('title'),
-    description: formData.get('description'),
-    isCompleted: false,
-  });
-
   try {
+    const data = taskSchema.parse({
+      title: formData.get('title'),
+      description: formData.get('description'),
+      isCompleted: false,
+    });
+
     const userId = getUserId();
 
     const res = await fetch(`${API_URL}/users/${userId}/tasks`, {
@@ -76,6 +77,10 @@ export async function addTask(formData: FormData) {
 
     revalidatePath('/');
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { error: error.errors.map((e) => e.message).join(', ') };
+    }
+
     return { error: 'Failed to create the task.' };
   }
 }
@@ -88,13 +93,13 @@ export async function editTask(formData: FormData) {
     return { error: 'Task not found.' };
   }
 
-  const data = taskSchema.parse({
-    title: formData.get('title'),
-    description: formData.get('description'),
-    isCompleted: false,
-  });
-
   try {
+    const data = taskSchema.parse({
+      title: formData.get('title'),
+      description: formData.get('description'),
+      isCompleted: false,
+    });
+
     const res = await fetch(`${API_URL}/users/${userId}/tasks/${taskId}`, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
@@ -106,6 +111,9 @@ export async function editTask(formData: FormData) {
 
     revalidatePath('/');
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { error: error.errors.map((e) => e.message).join(', ') };
+    }
     return { error: 'Failed to update the task.' };
   }
 }

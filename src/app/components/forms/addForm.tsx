@@ -1,11 +1,12 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 import styled from 'styled-components';
 
 import { addTask } from '@/server/taskActions';
+import { StyledError } from '../ui/formError.styled';
 import { LabelledInput } from '../ui/labelledInput';
 import { StyledSubmitButton } from '../ui/submitButton.styled';
 
@@ -20,6 +21,8 @@ type Props = {
 };
 
 export const AddForm = ({ setIsDialogOpen }: Props) => {
+  const [error, setError] = useState('');
+
   const ref = useRef<HTMLFormElement>(null);
 
   const { pending } = useFormStatus();
@@ -28,8 +31,12 @@ export const AddForm = ({ setIsDialogOpen }: Props) => {
     <StyledForm
       ref={ref}
       action={async (formData) => {
+        const res = await addTask(formData);
+        if (res?.error) {
+          setError(res.error);
+          return;
+        }
         ref.current?.reset();
-        await addTask(formData);
         toast('Task added successfully');
         setIsDialogOpen(false);
       }}
@@ -39,6 +46,7 @@ export const AddForm = ({ setIsDialogOpen }: Props) => {
       <StyledSubmitButton aria-disabled={pending} disabled={pending}>
         Add task
       </StyledSubmitButton>
+      {error && error.length > 0 && <StyledError>{error}</StyledError>}
     </StyledForm>
   );
 };

@@ -2,7 +2,7 @@
 
 import { login, register } from '@/server/userActions';
 import Link from 'next/link';
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import styled from 'styled-components';
 
 import { StyledError } from '../ui/formError.styled';
@@ -37,12 +37,16 @@ export const AuthForm = ({ type }: Props) => {
 
   const [error, formAction] = useFormState(action, null);
 
+  const { pending } = useFormStatus();
+
   return (
     <StyledWrapper>
       <StyledForm action={formAction}>
         <LabelledInput label="Username" id="name" name="name" />
         <LabelledInput label="Password" id="password" name="password" type="password" />
-        <StyledSubmitButton>{buttonText}</StyledSubmitButton>
+        <StyledSubmitButton disabled={pending} aria-disabled={pending}>
+          {buttonText}
+        </StyledSubmitButton>
         {error && <StyledError>{error}</StyledError>}
         <Link href={linkHref}>{linkText}</Link>
       </StyledForm>

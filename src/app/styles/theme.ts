@@ -8,7 +8,7 @@ const theme = {
     grey: '#9D9D9D',
   },
   sizes: {
-    desktop: '1280px',
+    desktop: '1024px',
     mobile: '640px',
   },
 };

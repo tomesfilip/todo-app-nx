@@ -17,7 +17,7 @@ const StyledAuthLink = styled(Link)`
   background-color: ${(props) => props.theme.colors.primary};
   border-radius: 0.5rem;
   color: ${(props) => props.theme.colors.bg};
-  font-size: 18px;
+  font-size: 1.2rem;
   padding: 0.75rem 1.4rem;
   border-radius: 12px;
   text-decoration: none;
@@ -53,7 +53,7 @@ const StyledTaskList = styled.ul`
 
 const StyledErrorText = styled.p`
   text-align: center;
-  font-size: 18px;
+  font-size: 1.2rem;
 `;
 
 type Props = {

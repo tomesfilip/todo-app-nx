@@ -8,9 +8,5 @@ export default async function Index() {
 
   const { success: tasks, error } = await getTasksByUser();
 
-  return (
-    <>
-      <TaskList userId={userId?.value} tasks={tasks} error={error} />
-    </>
-  );
+  return <TaskList userId={userId?.value} tasks={tasks} error={error} />;
 }

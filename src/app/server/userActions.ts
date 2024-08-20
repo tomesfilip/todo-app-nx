@@ -70,3 +70,12 @@ export async function login(previousState: any, formData: FormData) {
   }
   redirect('/');
 }
+
+export async function logout() {
+  try {
+    cookies().delete('userId');
+    redirect('/login');
+  } catch (error) {
+    return 'Failed to log out. Please try again.';
+  }
+}

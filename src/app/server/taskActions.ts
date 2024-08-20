@@ -28,6 +28,28 @@ export async function getTasksByUser(): Promise<{
   }
 }
 
+export async function getTaskByUser(taskId: string): Promise<{
+  success?: TaskType;
+  error?: string;
+}> {
+  try {
+    const userId = cookies().get('userId');
+    if (!userId) {
+      return { error: 'User not found. Please login' };
+    }
+
+    const res = await fetch(`${API_URL}/users/${userId.value}/tasks/${taskId}`);
+    if (!res.ok) {
+      return { error: 'No task were found.' };
+    }
+
+    const task: TaskType = await res.json();
+    return { success: task };
+  } catch (err) {
+    return { error: 'No task were found.' };
+  }
+}
+
 export async function addTask(formData: FormData) {
   const userId = cookies().get('userId');
   if (!userId) {
@@ -36,11 +58,13 @@ export async function addTask(formData: FormData) {
 
   const schema = z.object({
     title: z.string().min(1),
+    description: z.string().min(1),
     isCompleted: z.boolean(),
   });
 
   const data = schema.parse({
     title: formData.get('title'),
+    description: formData.get('description'),
     isCompleted: false,
   });
 
@@ -72,11 +96,13 @@ export async function editTask(formData: FormData) {
 
   const schema = z.object({
     title: z.string().min(1),
+    description: z.string().min(1),
     isCompleted: z.boolean(),
   });
 
   const data = schema.parse({
     title: formData.get('title'),
+    description: formData.get('description'),
     isCompleted: false,
   });
 
@@ -141,8 +167,6 @@ export async function toggleCompleted(formData: FormData) {
         isCompleted: !(isCompleted === 'checked'),
       }),
     });
-
-    console.log('compliting');
 
     if (!res.ok) {
       throw new Error('Failed to update a task');
